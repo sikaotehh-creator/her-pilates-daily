@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日普拉提精进</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            /* 普拉提风格背景图：干净、木质、自然光 */
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: #4a5568;
+        }
+        .card {
+            background-color: #fdfbf7; /* 柔和米色背景 */
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            max-width: 550px;
+            width: 100%;
+            border-left: 10px solid #84a98c; /* 鼠尾草绿侧边条 */
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 15px;
+        }
+        .time-badge {
+            background-color: #84a98c;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+        .tag {
+            color: #52796f;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            background: #e8f3ee;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+        h2 {
+            font-size: 1.8em;
+            color: #2f3e46;
+            margin: 0 0 20px 0;
+            font-weight: 600;
+        }
+        .content {
+            font-size: 1.15em;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #2d3748;
+        }
+        .tip-box {
+            background-color: #edf2f7;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 1em;
+            color: #4a5568;
+            display: flex;
+            align-items: flex-start;
+        }
+        .tip-icon {
+            margin-right: 12px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="header">
+        <span class="time-badge" id="clock">TIME</span>
+        <span class="tag" id="tag">FOCUS</span>
+    </div>
+    
+    <h2 id="title">Loading...</h2>
+    <div class="content" id="main-text">
+        正在调整呼吸，准备开始...
+    </div>
+    
+    <div class="tip-box">
+        <span class="tip-icon">💡</span>
+        <span id="tip-text">保持脊柱延伸，核心收紧。</span>
+    </div>
+</div>
+
+<script>
+    // --- 你的普拉提知识库 ---
+    const pilatesData = [
+        { 
+            hour: 8, 
+            tag: "基础概念", 
+            title: "核心不只是腹肌", 
+            main_text: "普拉提中的‘核心’（Powerhouse）不仅指腹直肌，还包括盆底肌、膈肌、多裂肌和腹横肌。想象你的躯干是一个圆柱体，四周都要有力。", 
+            tip: "练习时不要只想着‘收肚子’，而是要寻找深层肌肉的包裹感。" 
+        },
+        { 
+            hour: 9, 
+            tag: "动作精讲", 
+            title: "百次拍击 (The Hundred)", 
+            main_text: "这是普拉提经典的热身动作。仰卧，双腿抬起至桌面式，头颈卷起。手臂在身体两侧有力地上下拍打，配合5次吸气、5次呼气。", 
+            tip: "如果脖子酸痛，可以把头放下来，或者把腿抬高一点以保护腰椎。" 
+        },
+        { 
+            hour: 12, 
+            tag: "康复知识", 
+            title: "改善骨盆前倾", 
+            main_text: "久坐容易导致骨盆前倾（腰椎压力大）。普拉提的‘骨盆卷动’（Pelvic Curl）能很好地拉伸紧张的髋屈肌，激活大腿后侧和臀部。", 
+            tip: "做卷动时，要像珍珠项链一样，一节一节地把脊柱抬离地面。" 
+        },
+        { 
+            hour: 15, 
+            tag: "解剖小课堂", 
+            title: "肩胛骨的稳定性", 
+            main_text: "很多颈部紧张都源于肩胛骨不稳定。在支撑类动作中，想象你的腋下夹着两张腋窝报纸，或者肩胛骨像两只手一样插进裤子后袋。", 
+            tip: "这能激活前锯肌，减少斜方肌（脖子两侧）的代偿发力。" 
+        },
+        { 
+            hour: 18, 
+            tag: "下班放松", 
+            title: "脊柱旋转", 
+            main_text: "侧卧，双臂向前伸直。吸气时手臂带动胸廓向后打开，眼睛看手指方向。这个动作能极好地打开僵硬的胸椎。", 
+            tip: "保持膝盖并拢贴地，确保旋转发生在胸椎，而不是腰椎。" 
+        },
+        // --- 请在这里粘贴 Gemini 帮你生成的更多数据 ---
+    ];
+
+    // --- 自动更新逻辑 ---
+    function updateContent() {
+        const now = new Date();
+        const currentHour = now.getHours();
+        
+        // 兜底内容：如果当前时间没数据，显示这条
+        const defaultContent = {
+            tag: "随时练习",
+            title: "控制与专注",
+            main_text: "普拉提不仅仅是动作，更是对身体的控制学（Contrology）。无论此刻你在做什么，试着调整坐姿，寻找坐骨垂直向下的感觉。",
+            tip: "沉肩，坠肘，顶头悬。"
+        };
+
+        let content = pilatesData.find(p => p.hour === currentHour);
+        if (!content) content = defaultContent;
+        
+        document.getElementById('clock').innerText = `${currentHour}:00`;
+        document.getElementById('tag').innerText = content.tag;
+        document.getElementById('title').innerText = content.title;
+        document.getElementById('main-text').innerText = content.main_text;
+        document.getElementById('tip-text').innerText = content.tip;
+    }
+
+    updateContent();
+</script>
+
+</body>
+</html>
